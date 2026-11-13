@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting LLM Summarizer service")
+    if not settings.llm_api_key:
+        logger.warning("LLM_API_KEY не установлен — сервис будет работать в режиме fallback")
     cache = TTLCache()
     summarizer = Summarizer(cache=cache)
     init_routes(summarizer)
@@ -30,3 +32,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="LLM Summarizer", version="1.0.0", lifespan=lifespan)
 app.include_router(router)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
