@@ -1,0 +1,52 @@
+==============================================
+  LLM SUMMARIZER - FULL DEMONSTRATION
+==============================================
+
+--- TEST 1: Fallback (LLM unavailable) ---
+HTTP 200
+summary: ⚠️ Сервис временно недоступен. Пожалуйста, попробуйте позже.
+model: fallback
+cached: False
+
+--- TEST 2: Success (mocked LLM) ---
+HTTP 200
+summary: Short summary of the text.
+model: gpt-3.5-turbo
+cached: False
+
+--- TEST 3: Cache hit (same text) ---
+HTTP 200
+summary: Short summary of the text.
+model: gpt-3.5-turbo
+cached: True
+
+--- TEST 4: Validation error (empty text) ---
+HTTP 422
+detail: {'detail': [{'type': 'string_too_short', 'loc': ['body', 'text'], 'msg': 'String should have at least 1 character', 'input': '', 'ctx': {'min_length': 1}}]}
+
+--- TEST 5: Validation error (text > 10000 chars) ---
+HTTP 422
+
+--- TEST 6: Missing field ---
+HTTP 422
+
+--- TEST 7: pytest results ---
+============================= test session starts =============================
+platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\User\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+PySide6 6.11.1 -- Qt runtime 6.11.1 -- Qt compiled 6.11.1
+rootdir: C:\Users\User\Yandex.Disk\HOMEWORK\ML\Итоговое задание собрать сервис и оформить PR\llm-summarizer
+plugins: anyio-4.12.1, qt-4.5.0
+collecting ... collected 9 items
+
+tests/test_api.py::test_process_success PASSED                           [ 11%]
+tests/test_api.py::test_process_empty_text PASSED                        [ 22%]
+tests/test_api.py::test_process_long_text PASSED                         [ 33%]
+tests/test_api.py::test_process_missing_field PASSED                     [ 44%]
+tests/test_llm.py::test_summarizer_success PASSED                        [ 55%]
+tests/test_llm.py::test_summarizer_fallback PASSED                       [ 66%]
+tests/test_llm.py::test_summarizer_cache_hit PASSED                      [ 77%]
+tests/test_llm.py::test_summarizer_cache_miss PASSED                     [ 88%]
+tests/test_llm.py::test_cache_ttl PASSED                                 [100%]
+
+============================== 9 passed in 4.81s ==============================
