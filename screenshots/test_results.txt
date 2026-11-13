@@ -1,0 +1,22 @@
+﻿==============================================
+  DEMONSTRATION OF LLM SUMMARIZER SERVICE
+==============================================
+Date: 11/13/2026 15:58:42
+
+--- TEST 1: Successful request ---
+HTTP 200
+summary: â ï¸ Ð¡ÐµÑÐ²Ð¸Ñ Ð²ÑÐµÐ¼ÐµÐ½Ð½Ð¾ Ð½ÐµÐ´Ð¾ÑÑÑÐ¿ÐµÐ½. ÐÐ¾Ð¶Ð°Ð»ÑÐ¹ÑÑÐ°, Ð¿Ð¾Ð¿ÑÐ¾Ð±ÑÐ¹ÑÐµ Ð¿Ð¾Ð·Ð¶Ðµ.
+model: fallback
+cached: False
+
+--- TEST 2: Validation error (empty text) ---
+HTTP 422
+body: {"detail":[{"type":"string_too_short","loc":["body","text"],"msg":"String should have at least 1 character","input":"","ctx":{"min_length":1}}]}
+
+--- TEST 3: Long text (>10000 chars) ---
+HTTP 422
+
+--- TEST 4: Missing field ---
+HTTP 422
+
+--- DONE ---
