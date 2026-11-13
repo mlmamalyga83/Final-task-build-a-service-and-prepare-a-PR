@@ -121,6 +121,10 @@ curl -X POST http://localhost:8000/process \
 pytest -v
 ```
 
+## Демонстрация работы
+
+Скриншоты и примеры запросов для каждого сценария — в [TESTING.md](TESTING.md).
+
 ## CI
 
 Настроен GitHub Actions (`.github/workflows/ci.yml`):
