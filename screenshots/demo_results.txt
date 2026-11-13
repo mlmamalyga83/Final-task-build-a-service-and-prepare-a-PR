@@ -1,0 +1,37 @@
+============================================================
+  LLM SUMMARIZER - COMPLETE DEMONSTRATION
+  All 6 required scenarios
+============================================================
+
+[1/6] FALLBACK (LLM unavailable without API key)
+  HTTP 200
+  summary: ⚠️ Сервис временно недоступен. Пожалуйста, попробуйте позже.
+  model: fallback
+  cached: False
+
+[2/6] SUCCESS (mocked LLM returns correct result)
+  HTTP 200
+  summary: Short summary of the input text.
+  model: gpt-3.5-turbo
+  cached: False
+
+[3/6] CACHE HIT (same request again)
+  HTTP 200
+  summary: Short summary of the input text.
+  model: gpt-3.5-turbo
+  cached: True
+  (LLM was NOT called - cache returned result)
+
+[4/6] VALIDATION ERROR (empty text)
+  HTTP 422
+  detail: [{"type": "string_too_short", "loc": ["body", "text"], "msg": "String should have at least 1 character", "input": "", "ctx": {"min_length": 1}}]
+
+[5/6] VALIDATION ERROR (text > 10000 chars)
+  HTTP 422
+
+[6/6] VALIDATION ERROR (missing field)
+  HTTP 422
+
+============================================================
+  ALL 6 SCENARIOS COMPLETED SUCCESSFULLY
+============================================================
